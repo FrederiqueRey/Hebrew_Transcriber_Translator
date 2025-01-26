@@ -33,30 +33,32 @@ def convert_to_png(file):
 
 def convert_png_to_txt(file):
     """
-    Convert each Png into tex and translate it into french
+    Convert each Png into tex and translate them into french
     """
     transcribed_article = ""
+    translated_article = ""
     images = sorted(Path(f'./{file}_img/').glob('*.png'))
     nb_images = len(images)
     with alive_bar(nb_images, title='Converting PNGs to TXT...') as bar:
         for img in sorted(Path(f'./{file}_img/').glob('*.png')):
-            #print(f"Converting {img} to TXT...")
             transcribed_page= "*** PAGE " + str(img)[:-4] + " ***\n\n" + pytesseract.image_to_string(Image.open(img), lang='heb')
-            translated_txt = translate_txt(transcribed_page)
-            transcribed_page= re.sub("\n[^\n]", " ", transcribed_page)
-            transcribed_article=transcribed_article + transcribed_page + "\n\n"
+            translated_page = re.sub("\n[^\n]", " ", translate_txt(transcribed_page)) 
+            transcribed_page = re.sub("\n[^\n]", " ", transcribed_page)
+            transcribed_article = transcribed_article + transcribed_page + "\n\n"
+            translated_article = translated_article + translated_page + "\n\n"
             bar()
 
-    # Save the transcribed article in a txt file        
-    file_name = file.split(".")[0]+"_transcribed.txt"
-    with open(file_name, "w") as text_file:
+    # Save the transcribed and translated article in txt files        
+    transcribed_file_name = file.split(".")[0]+"_transcribed.txt"
+    with open(transcribed_file_name, "w") as text_file:
         text_file.write(transcribed_article)
+    translated_file_name = file.split(".")[0]+"_translated.txt"
+    with open(translated_file_name, "w") as text_file:
+        text_file.write(translated_article)
 
     # Remove the tmp img directory
-    # Get directory name
-    dir = file + "_img"
-    # Try to remove the tree; if it fails, throw an error using try...except.
-    try:
+    dir = file + "_img"                                        #Get directory name
+    try:                                                       # Try to remove the tree; if it fails, throw an error using try...except.
         shutil.rmtree(dir)
     except OSError as e:
         print("Error: %s - %s." % (e.filename, e.strerror))
@@ -64,42 +66,14 @@ def convert_png_to_txt(file):
 def translate_txt(text_to_trans):
     translator = GoogleTranslator(source='hebrew', target='french')
     translated_text = translator.translate(text_to_trans)
-    return translated_txt
+    return translated_text
 
-
-def translate_txt_old(file):
-    file_name = file.split(".")[0] + "_transcribed.txt"
-    with open(file_name, "r", encoding="utf-8") as text_file:
-        file_txt = text_file.read()
-
-    translator = GoogleTranslator(source='hebrew', target='french')
-    translated_article = translator.translate(file_txt)
-
-    translated_file_name = file.split(".")[0] + "_translated.txt"
-    with open(translated_file_name, "w", encoding="utf-8") as text_file:
-        text_file.write(translated_article)
-
-    print(f"Translation completed. Translated file saved as {translated_file_name}")
-
-
-
-# def translate_txt(file):
-#     file_name = file.split(".")[0]+"_transcribed.txt"
-#     with open(file_name, "r") as text_file:
-#         file_txt = text_file.read()
-#     translator = Translator()
-#     translated_article = ""
-#     translated_article = str(translator.translate(file_txt, src='he', dest='fr'))
-#     #translated_article = translated_article + translated_page + "\n\n"
-#     with open("translated_article.txt", "w") as text_file:
-#         text_file.write(translated_article)
 
 @click.command()
 @click.argument('file')
 def transcribe(file):
-   # convert_to_png(file)
-    #convert_png_to_txt(file)
-    translate_txt(file)
+    convert_to_png(file)
+    convert_png_to_txt(file)
 
 if __name__ == "__main__":
     transcribe()

@@ -31,7 +31,7 @@ def convert_to_png(file):
         pix.save(val)
     doc.close()
 
-def convert_png_to_txt(file):
+def convert_png_to_txt(file, lang):
     """
     Convert each Png into tex and translate them into french
     """
@@ -42,7 +42,7 @@ def convert_png_to_txt(file):
     with alive_bar(nb_images, title='Converting PNGs to TXT...') as bar:
         for img in sorted(Path(f'./{file}_img/').glob('*.png')):
             transcribed_page= "*** PAGE " + str(img)[:-4] + " ***\n\n" + pytesseract.image_to_string(Image.open(img), lang='heb')
-            translated_page = re.sub("\n[^\n]", " ", translate_txt(transcribed_page)) 
+            translated_page = re.sub("\n[^\n]", " ", translate_txt(transcribed_page, lang)) 
             transcribed_page = re.sub("\n[^\n]", " ", transcribed_page)
             transcribed_article = transcribed_article + transcribed_page + "\n\n"
             translated_article = translated_article + translated_page + "\n\n"
@@ -63,17 +63,18 @@ def convert_png_to_txt(file):
     except OSError as e:
         print("Error: %s - %s." % (e.filename, e.strerror))
 
-def translate_txt(text_to_trans):
-    translator = GoogleTranslator(source='hebrew', target='french')
+def translate_txt(text_to_trans, lang):
+    translator = GoogleTranslator(source='hebrew', target=lang)
     translated_text = translator.translate(text_to_trans)
     return translated_text
 
 
 @click.command()
 @click.argument('file')
-def transcribe(file):
+@click.option('--lang', default='fr', help='Language to translate to, see Googletranslate for available languages')
+def transcribe(file, lang):
     convert_to_png(file)
-    convert_png_to_txt(file)
+    convert_png_to_txt(file, lang)
 
 if __name__ == '__main__':
     transcribe()

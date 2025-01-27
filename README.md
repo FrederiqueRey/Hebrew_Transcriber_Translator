@@ -1,4 +1,5 @@
-# Transklate - A small tools to convert PDF in Hebrew in to txt and to translate them
+# Transklate
+## A small tools to convert PDF in Hebrew to txt and to translate it
 
 The purpose of this little code is to automate the following two processes:
 1. to transcribe a PDF written in Hebrew into a TXT file using Tesseract.

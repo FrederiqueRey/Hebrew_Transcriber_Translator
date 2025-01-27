@@ -4,14 +4,15 @@ build-backend = "hatchling.build"
 
 [project]
 name = "transklate"
-version = "0.0.0"
+version = "0.0.1"
 dependencies = [
-    # A faire
-    "newick==1.9.*",
-    "click==8.0.*",
-    "scipy==1.14.*",
-    "numpy==2.1.*",
-    "networkx==3.4.*"
+    "pytesseract==0.3.13",
+    "regex==2024.11.6",
+    "IronPdf==2025.1.1.1",
+    "click==8.1.*",
+    "PyMuPDF==1.25.2",
+    "alive-progress==3.2.0",
+    "deep-translator==1.11.4"
 ]
 requires-python = ">=3.9"
 authors = [
@@ -22,18 +23,13 @@ maintainers = [
 ]
 description = "OCRise PDF in hebrew to txt and translate them"
 readme = "README.md"
-license = {file = "LICENSE.txt"}
+licence = "MIT"
+licebce-file = "LICENCE.txt"
 keywords = ["OCR", "transcribe", "hebrew", "translation"]
+
 classifiers = [
   "Programming Language :: Python"
 ]
 
 [project.scripts]
-# A revoir
-compute = "stemmadist:main.compute"
-
-[project.optional-dependencies]
-# A revoir
-ci = [
-"pytest==8.3.*",
-]
+transklate = "transklate:transklate.transcribe"

@@ -6,8 +6,8 @@ import os, shutil #To remove the directory
 from pathlib import Path
 from PIL import Image
 from alive_progress import alive_bar #To show progress bar
-#from libretranslatepy import LibreTranslateAPI
 from deep_translator import GoogleTranslator
+#from deep_translator import ChatGptTranslator
 
 def convert_to_png(file):
     """
@@ -75,9 +75,8 @@ def transcribe(file):
     convert_to_png(file)
     convert_png_to_txt(file)
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     transcribe()
-
 
 
     

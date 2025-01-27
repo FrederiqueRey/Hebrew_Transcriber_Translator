@@ -42,8 +42,9 @@ def convert_png_to_txt(file, lang):
     with alive_bar(nb_images, title='Converting PNGs to TXT...') as bar:
         for img in sorted(Path(f'./{file}_img/').glob('*.png')):
             transcribed_page= "*** PAGE " + str(img)[:-4] + " ***\n\n" + pytesseract.image_to_string(Image.open(img), lang='heb')
-            translated_page = re.sub("\n[^\n]", " ", translate_txt(transcribed_page, lang)) 
-            transcribed_page = re.sub("\n[^\n]", " ", transcribed_page)
+            #print(transcribed_page)
+            translated_page = re.sub("\n(?!\n)", " ", translate_txt(transcribed_page, lang)) 
+            transcribed_page = re.sub("\n(?!\n)", " ", transcribed_page)
             transcribed_article = transcribed_article + transcribed_page + "\n\n"
             translated_article = translated_article + translated_page + "\n\n"
             bar()

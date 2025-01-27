@@ -9,10 +9,14 @@ The purpose of this little code is to automate the following two processes:
 Currently, the translation is not very good (and not as good as you'd expect from Google Translate online).
 It is a really work in progress code.
 
-### instalation
-`pip install transklate`
+## Instalation
+```bash
+pip install transklate
+```
 
-### documentation
-`transklate <file_name.pdf>`
+## Basic CLI use
+```bash
+transklate <file_name.pdf>
+```
 
 

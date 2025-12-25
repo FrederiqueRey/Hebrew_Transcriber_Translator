@@ -29,15 +29,24 @@ class TestTransklate(unittest.TestCase):
 
 class TestConvertToPNG(unittest.TestCase):
 
+    def setUp(self):
+        """Set up the test environment."""
+        self.test_pdf = Path(__file__).resolve().parent / "tests_data" / "test.pdf"
+        self.output_dir = self.test_pdf.parent / (self.test_pdf.stem + "_img")
+        self.output_file = self.output_dir / "10001.png"
+
+    def tearDown(self):
+        """Clean up after the test."""
+        if self.output_dir.exists():
+            for file in self.output_dir.glob("*"):
+                file.unlink()
+            self.output_dir.rmdir()
+
     def test_convert_to_png(self):
         """Tests that the convert to PNG function works as expected : creation of folder and creation of image.
         """
-        self.test_pdf = Path(__file__).resolve().parent / "tests_data" / "test.pdf"
-        self.output_dir = self.test_pdf.stem + "_img"
-        self.output_file = Path(self.output_dir) / "10001.png"
-
         convert_to_png(str(self.test_pdf))
-        self.assertTrue(Path(self.output_dir).exists(), "Output directory was not created.")
+        self.assertTrue(self.output_dir.exists(), "Output directory was not created.")
         self.assertTrue(self.output_file.exists(), f"Expected PNG file {self.output_file} was not created.")
         
 

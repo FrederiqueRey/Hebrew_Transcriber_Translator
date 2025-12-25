@@ -24,21 +24,23 @@ def convert_to_png(file: str) -> None:
     """
     # for file in sorted(Path('.').glob('*.pdf')): # old command for converting all pdf files in the directory
 
-    file_name = Path(file).stem
+    pdf_path = Path(file)
+    file_name = pdf_path.stem
+    img_dir = pdf_path.parent / f"{file_name}_img"
     print(f"Converting {file} to PNG...")
     doc = fitz.open(file)
     zoom = 4
     mat = fitz.Matrix(zoom, zoom)
     count = 0
-    Path(f"./{file_name}_img").mkdir(parents=True, exist_ok=True)
+    img_dir.mkdir(parents=True, exist_ok=True)
     # Count variable is to get the number of pages in the pdf
     for p in doc:
         count += 1
     for i in range(count):
-        val = f"./{file_name}_img/{i+10001}.png"
+        val = img_dir / f"{i+10001}.png"
         page = doc.load_page(i)
         pix = page.get_pixmap(matrix=mat)
-        pix.save(val)
+        pix.save(str(val))
     doc.close()
 
 
@@ -54,13 +56,15 @@ def convert_png_to_txt(file: str, lang: str) -> None:
         None: None, only outputs the transcribed and translated text in txt
             files.
     """
-    file_name = Path(file).stem
+    pdf_path = Path(file)
+    file_name = pdf_path.stem
+    img_dir = pdf_path.parent / f"{file_name}_img"
     transcribed_article = ""
     translated_article = ""
-    images = sorted(Path(f"./{file_name}_img/").glob("*.png"))
+    images = sorted(img_dir.glob("*.png"))
     nb_images = len(images)
     with alive_bar(nb_images, title="Converting PNGs to TXT...") as bar:
-        for img in sorted(Path(f"./{file_name}_img/").glob("*.png")):
+        for img in sorted(img_dir.glob("*.png")):
             transcribed_page = (
                 "*** PAGE "
                 + str(img)[:-4]
@@ -86,7 +90,7 @@ def convert_png_to_txt(file: str, lang: str) -> None:
 
 
     # Remove the tmp img directory
-    dir = file_name + "_img"  # Get directory name
+    dir = img_dir  # Get directory name
     try:  # Try to remove the tree; if it fails, throw an error using try...except.
         shutil.rmtree(dir)
     except OSError as e:

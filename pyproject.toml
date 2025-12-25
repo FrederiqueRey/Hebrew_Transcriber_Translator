@@ -16,10 +16,10 @@ dependencies = [
 ]
 requires-python = ">=3.9"
 authors = [
-  {name = "Frédérique Michèle Rey", email = "frederique.rey@univ-lorraine.fr"},
+  {name = "Frédérique Michèle Rey", email = "frederique.rey@hu-berlin.de"},
 ]
 maintainers = [
-  {name = "Frédérique Michèle Rey", email = "frederique.rey@univ-lorraine.fr"},
+  {name = "Frédérique Michèle Rey", email = "frederique.rey@hu-berlin.de"},
 ]
 description = "OCRise PDF in hebrew to txt and translate them"
 readme = "README.md"

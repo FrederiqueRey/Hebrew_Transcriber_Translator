@@ -1,2 +1,12 @@
 venv/
 dist/
+
+# Output files
+*_transcribed.txt
+*_translated.txt
+*_img/
+
+# Coverage and system files
+.coverage
+.DS_Store
+.gitignore

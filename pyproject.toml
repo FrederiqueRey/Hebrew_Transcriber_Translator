@@ -1,0 +1,35 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "transklate"
+version = "0.0.1"
+dependencies = [
+    "pytesseract==0.3.13",
+    "regex==2024.11.6",
+    "IronPdf==2025.1.1.1",
+    "click==8.1.*",
+    "PyMuPDF==1.25.2",
+    "alive-progress==3.2.0",
+    "deep-translator==1.11.4"
+]
+requires-python = ">=3.9"
+authors = [
+  {name = "Frédérique Michèle Rey", email = "frederique.rey@univ-lorraine.fr"},
+]
+maintainers = [
+  {name = "Frédérique Michèle Rey", email = "frederique.rey@univ-lorraine.fr"},
+]
+description = "OCRise PDF in hebrew to txt and translate them"
+readme = "README.md"
+licence = "MIT"
+licebce-file = "LICENCE.txt"
+keywords = ["OCR", "transcribe", "hebrew", "translation"]
+
+classifiers = [
+  "Programming Language :: Python"
+]
+
+[project.scripts]
+transklate = "transklate:transklate.transcribe"

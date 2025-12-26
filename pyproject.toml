@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "transklate"
-version = "0.0.1"
+version = "0.1.0"
 dependencies = [
     "pytesseract==0.3.13",
     "regex==2024.11.6",
@@ -23,8 +23,8 @@ maintainers = [
 ]
 description = "Use OCR Tesseract to convert Hebrew PDFs to text files and then translate them."
 readme = "README.md"
-licence = "MIT"
-licebce-file = "LICENCE.txt"
+license = "MIT"
+license-file = "LICENCE.txt"
 keywords = ["OCR", "transcribe", "hebrew", "translation"]
 
 classifiers = [
@@ -32,4 +32,4 @@ classifiers = [
 ]
 
 [project.scripts]
-transklate = "transklate:transklate.transcribe"
+transklate = "transklate.transklate:transcribe"

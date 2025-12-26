@@ -21,7 +21,7 @@ authors = [
 maintainers = [
   {name = "Frédérique Michèle Rey", email = "frederique.rey@hu-berlin.de"},
 ]
-description = "OCRise PDF in hebrew to txt and translate them"
+description = "Use OCR Tesseract to convert Hebrew PDFs to text files and then translate them."
 readme = "README.md"
 licence = "MIT"
 licebce-file = "LICENCE.txt"
